@@ -1,3 +1,76 @@
+<div class="image-repeater-container Lp_imageRep"
+    style="background-color: {{ module.background_color.css }};">
+  <div class="page-center">
+    {% if module.heading_hide_show %}
+    <div class="image-repeater-heading">
+      {% set href = module.heading_text_link.url.href %}
+      {% if module.heading_text_link.url.type is equalto "EMAIL_ADDRESS" %}
+      {% set href = "mailto:" + href %}
+      {% endif %}
+      <a
+          {% if module.heading_text_link.url.type is equalto "CALL_TO_ACTION"  %}
+          href="{{ href }}" {# The href here is not escaped as it is not editable and functions as a JavaScript call to the associated CTA #}
+          {% else %}
+          href="{{ href|escape_url }}"
+          {% endif %}
+          {% if module.heading_text_link.open_in_new_tab %}
+          target="_blank"
+          {% endif %}
+          {% if module.heading_text_link.rel %}
+          rel="{{ module.heading_text_link.rel|escape_attr }}"
+          {% endif %}
+          >
+        <h2>{{ module.heading_text }}</h2>
+      </a>
+    </div>
+    {% endif %}
+    <div class="image-repeater">
+      {% for item in module.image_cards %}
+      {% if item.card_image.src %}
+      <div class="image-card">
+        <img src="{{ item.card_image.src }}"
+             alt="{{ item.card_image.alt }}"
+             width="168"
+             height="77"
+             loading="lazy">
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+    <div class="image-repeater mobile">
+      {% for item in module.mobile_logos %}
+      {% if item.card_image.src %}
+      <div class="image-card">
+        <img src="{{ item.card_image.src }}"
+             alt="{{ item.card_image.alt }}"
+             width="168"
+             height="77"
+             loading="lazy">
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .image-repeater-container.Lp_imageRep{
+    padding:{{ module.style.section_spacing_top }}px 0 {{ module.style.section_spacing_bottom }}px;
+  }
+  @media(max-width:768px){
+    .image-repeater-container.Lp_imageRep{
+      {{ module.style.mobile_spacing.css }};
+    }
+  }
+</style>
+
+/** END WITHOUT LINKS ***/
+
+
+
+
+/**** WITH LINKING ****/
+
 <div class="image-repeater-container Lp_imageRep" 
      style="background-color: {{ module.background_color.css }};">
   <div class="page-center">
